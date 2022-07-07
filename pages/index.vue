@@ -48,11 +48,21 @@ export default {
     };
   },
 
-  mounted() {
-    this.columns = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('col')) : null;  
+  created() {
+    const columns = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('col')) : null;
+    if (columns !== null) {
+      this.coumns = JSON.parse(localStorage.getItem('col'));
+    }
   },
 
   methods: {
+    // Change Draggable Order
+    onEnd(e) {
+      if (this.columns) {
+        localStorage.setItem('col', JSON.stringify(this.columns));
+      } 
+    },
+
     // Save and get from Local Storage
     getFromLocalStorage() {
       localStorage.setItem('col', JSON.stringify(this.columns));
@@ -92,12 +102,10 @@ export default {
   <div id="app">
     <div class="pt-10 pl-10">
       <!-- Add new Status Option -->
-      <input 
-        v-model="newStatus"
+      <input v-model="newStatus"
         class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         type="text" placeholder="Add new Status">
-      <button 
-        class=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 
+      <button class=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 
         hover:border-blue-500 rounded mx-2 h-10" @click="addStatus">
         Add New
       </button>
@@ -114,7 +122,8 @@ export default {
           </p>
 
           <!-- Draggable component comes from vuedraggable. It provides drag & drop functionality -->
-          <draggable :list="columns[key].tasks" :animation="200" ghost-class="ghost-card" group="tasks">
+          <draggable 
+          :list="columns[key].tasks" :animation="200" :move="onMove" ghost-class="ghost-card" group="tasks" @end="onEnd">
 
             <!-- Each element from here will be draggable and animated. Note :key is very important here to be unique both for draggable and animations to be smooth & consistent. -->
             <task-card v-for="(task) in columns[key].tasks" :key="task.id" :task="task" class="mt-3 cursor-move">
@@ -122,12 +131,10 @@ export default {
           </draggable>
 
           <br />
-          <input 
-            v-model="newTask"
+          <input v-model="newTask"
             class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text" placeholder="Add new Task">
-          <button 
-            class=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 
+          <button class=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 
             hover:border-blue-500 rounded mx-2 h-10" @click="addTask(key)">
             Add
           </button>
