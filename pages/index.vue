@@ -9,44 +9,50 @@ export default {
     draggable
   },
   data() {
+    const columns = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('col')) : null;
+
     return {
-      columns : {
-        col1: {
-          tasks: [
-            {
-              id: 1,
-              title: "Add discount code to checkout page",
-            },
-            {
-              id: 2,
-              title: "Provide documentation on integrations",
-            },
-            {
-              id: 3,
-              title: "Design shopping cart dropdown",
-            },
-          ]
-        },
-        col2: {
-          tasks: [{
-              id: 1,
-              title: "Add discount code to checkout page",
-            },
-            {
-              id: 2,
-              title: "Provide documentation on integrations",
-            },
-            {
-              id: 3,
-              title: "Design shopping cart dropdown",
-            },]
-        }
-      }
+      columns
+      // columns : {
+      //   col1: {
+      //     tasks: [
+      //       {
+      //         id: 1,
+      //         title: "Add discount code to checkout page",
+      //       },
+      //       {
+      //         id: 2,
+      //         title: "Provide documentation on integrations",
+      //       },
+      //       {
+      //         id: 3,
+      //         title: "Design shopping cart dropdown",
+      //       },
+      //     ]
+      //   },
+      //   col2: {
+      //     tasks: [{
+      //         id: 1,
+      //         title: "Add discount code to checkout page",
+      //       },
+      //       {
+      //         id: 2,
+      //         title: "Provide documentation on integrations",
+      //       },
+      //       {
+      //         id: 3,
+      //         title: "Design shopping cart dropdown",
+      //       },]
+      //   }
+      // }
     };
   },
 
-  methods: {
+  mounted() {
+    this.columns = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('col')) : null;  
+  },
 
+  methods: {
     // Save and get from Local Storage
     getFromLocalStorage() {
       localStorage.setItem('col', JSON.stringify(this.columns));
@@ -58,10 +64,10 @@ export default {
     // Add new Task
     addTask(col) {
       if (this.newTask !== "") {
-        const newTaskObj = { id: 1, title: this.newTask };
+        const newTaskObj = { id: this.columns[col].tasks.length+1, title: this.newTask };
         this.columns[col].tasks.push(newTaskObj);
 
-        this.newTask = " ";
+        this.newTask = "";
       }
 
       this.getFromLocalStorage();
@@ -75,7 +81,7 @@ export default {
         this.getFromLocalStorage();
       }
 
-      this.newStatus = " ";
+      this.newStatus = "";
       console.log(this.columns);
     }
   }
@@ -98,7 +104,7 @@ export default {
     </div>
 
     <div class="flex justify-center relative">
-      <div class="min-h-screen flex overflow-x-scroll py-12">
+      <div v-if="columns !== null" class="min-h-screen flex overflow-x-scroll py-12">
         <div v-for="key in Object.keys(columns)" :key="key"
           class="bg-gray-100 rounded-lg px-3 py-3 column-width rounded mr-4">
           <!-- Status Title -->
