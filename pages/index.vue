@@ -87,11 +87,12 @@ export default {
     <div class="pt-10 pl-10">
       <!-- Add new Status Option -->
       <input 
-        v-model="newStatus" class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        v-model="newStatus"
+        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         type="text" placeholder="Add new Status">
       <button 
         class=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 
-        hover:border-blue-500 rounded mx-2" @click="addStatus">
+        hover:border-blue-500 rounded mx-2 h-10" @click="addStatus">
         Add New
       </button>
     </div>
@@ -112,8 +113,15 @@ export default {
           </draggable>
 
           <br />
-          <input v-model="newTask" type="text">
-          <button @click="addTask(key)">Add</button>
+          <input 
+            v-model="newTask"
+            class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            type="text" placeholder="Add new Task">
+          <button 
+            class=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 
+            hover:border-blue-500 rounded mx-2 h-10" @click="addTask(key)">
+            Add
+          </button>
 
         </div>
       </div>
