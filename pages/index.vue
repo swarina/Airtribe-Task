@@ -12,39 +12,9 @@ export default {
     const columns = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem('col')) : null;
 
     return {
-      columns
-      // columns : {
-      //   col1: {
-      //     tasks: [
-      //       {
-      //         id: 1,
-      //         title: "Add discount code to checkout page",
-      //       },
-      //       {
-      //         id: 2,
-      //         title: "Provide documentation on integrations",
-      //       },
-      //       {
-      //         id: 3,
-      //         title: "Design shopping cart dropdown",
-      //       },
-      //     ]
-      //   },
-      //   col2: {
-      //     tasks: [{
-      //         id: 1,
-      //         title: "Add discount code to checkout page",
-      //       },
-      //       {
-      //         id: 2,
-      //         title: "Provide documentation on integrations",
-      //       },
-      //       {
-      //         id: 3,
-      //         title: "Design shopping cart dropdown",
-      //       },]
-      //   }
-      // }
+      columns,
+      newStatus: "",
+      newTask: "",
     };
   },
 
@@ -92,7 +62,6 @@ export default {
       }
 
       this.newStatus = "";
-      console.log(this.columns);
     }
   }
 };
@@ -102,10 +71,12 @@ export default {
   <div id="app">
     <div class="pt-10 pl-10">
       <!-- Add new Status Option -->
-      <input v-model="newStatus"
+      <input 
+        v-model="newStatus"
         class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         type="text" placeholder="Add new Status">
-      <button class=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 
+      <button 
+        class=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 
         hover:border-blue-500 rounded mx-2 h-10" @click="addStatus">
         Add New
       </button>
@@ -113,7 +84,8 @@ export default {
 
     <div class="flex justify-center relative">
       <div v-if="columns !== null" class="min-h-screen flex overflow-x-scroll py-12">
-        <div v-for="key in Object.keys(columns)" :key="key"
+        <div 
+          v-for="key in Object.keys(columns)" :key="key"
           class="bg-gray-100 rounded-lg px-3 py-3 column-width rounded mr-4">
           <!-- Status Title -->
           <p class="text-gray-800 font-bold font-sans tracking-wide text-lg px-1 pb-2">
@@ -130,11 +102,14 @@ export default {
             </task-card>
           </draggable>
 
-          <br />
-          <input v-model="newTask"
+          <br>
+
+          <input 
+            v-model="newTask"
             class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             type="text" placeholder="Add new Task">
-          <button class=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 
+          <button 
+            class=" bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 
             hover:border-blue-500 rounded mx-2 h-10" @click="addTask(key)">
             Add
           </button>
